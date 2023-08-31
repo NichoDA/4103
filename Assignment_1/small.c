@@ -1,3 +1,4 @@
+//Nicholas Domingue & Bryce Olivier
 char x='X',s=' ';
 int main(){
     int i,j;
