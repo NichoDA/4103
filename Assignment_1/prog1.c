@@ -30,13 +30,12 @@ int main(int argc, char *argv[]) {
         strings[i] = (char *)malloc(BUFSIZE + 1);
         fgets(strings[i], BUFSIZE, stdin);
 
-        size_t size = strlen(strings[i]);
+        int size = strlen(strings[i]);
         if (size > 0 && strings[i][size - 1] == '\n') {
             strings[i][size - 1] = '\0';
         } else {
             // For invalid strings, get rid of extra characters
-            int c;
-            while ((c = getchar()) != '\n' && c != EOF);
+            while (getchar() != '\n');
         }
     }
 
