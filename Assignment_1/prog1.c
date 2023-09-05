@@ -51,8 +51,8 @@ int main() {
             buf[len - 1] = '\0';
             len--;
         }
-        if (len > MAX_STRING_LENGTH) {
-            buf[MAX_STRING_LENGTH] = '\0';
+        if (len > BUFSIZE) {
+            buf[BUFSIZE] = '\0';
         }
 
         strings[i] = (char *)malloc((len + 1) * sizeof(char));
