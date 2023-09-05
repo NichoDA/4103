@@ -1,13 +1,11 @@
 //Nicholas Domingue & Bryce Olivier
-char x='X',s=' ';
-int main(){
-    int i,j;
-    for(j=0;j<5;j++){
-        if(j%2==0){
-            putchar(s);
-        }
-        for(i=0;i<5;i++){
-            putchar(s),putchar(x);}
-    printf("\n");
+int main() {
+    int i, j;
+    for (j = 0; j < 5; j++) {
+        (j % 2 == 0) ? putchar(' ') : 0;
+        for (i = 0; i < 5; i++)
+            putchar(' '), putchar('X');
+        putchar('\n');
     }
-    return 0;}
+    return 0;
+}
