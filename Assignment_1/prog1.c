@@ -3,9 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_STRING_LENGTH 512
+#define BUFSIZE 512
 
 // Sample comparison function for qsort():
+
 int cmp(const void *p1, const void *p2) {
     const char *str1 = *(const char **)p1;
     const char *str2 = *(const char **)p2;
@@ -14,7 +15,7 @@ int cmp(const void *p1, const void *p2) {
 
 int main() {
     int n;
-    char buf[MAX_STRING_LENGTH + 1];
+    char buf[BUFSIZE + 1];
 
     printf("Enter the number of strings: ");
     fflush(stdout);
