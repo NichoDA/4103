@@ -1,3 +1,4 @@
+//Nicholas Domingue & Bryce Olivier
 #include <stdio.h>
 
 #define TOTAL_ELEMENTS ((sizeof(array) / sizeof(array[0])))
