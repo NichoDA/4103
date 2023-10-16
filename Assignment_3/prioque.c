@@ -730,8 +730,23 @@ while (scanf("%d %d %d %d %d", &processes[num_of_processes].time, &processes[num
 PriorityQueue q1, q2, q3, q4;
 int clock = 0;
 
+// function for enqueueing process
+void enqueueProcess(){
+
+}
+
+// function to handle scheduling
+void handleScheduling(){
+
+}
+
+// function to handle changing states between I/O, demotion, and promotion rules
+void handleStateChange(){
+    
+}
+
 // main loop for queues
-while(/*condition to check if any processes are still running*/){
+while(/* there's another (RUN, I/O, REPEAT) phase for process PID */){
   // check if process should enter
   // enqueue processes in q1
   // ...
