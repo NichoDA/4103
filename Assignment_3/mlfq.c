@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     printf("Queue entries one per line:\n");
     // read input and add to processes array
     while (num_of_processes <= 10){ /* need to come back and make while loop dynamic */
-        scanf("%d %d %d %d %d", &processes[num_of_processes].times, &processes[num_of_processes].pid, 
+        scanf("%d %d %d %d %d", &processes[num_of_processes].time, &processes[num_of_processes].pid, 
                 &processes[num_of_processes].run, &processes[num_of_processes].io, &processes[num_of_processes].repeat);
         num_of_processes++;
     }
