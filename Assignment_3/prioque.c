@@ -1,3 +1,4 @@
+// Nicholas Domingue and Bryce Olivier
 //
 // Implementation of "prioque.h" priority queue functions (c)
 // 1985-2022 by Golden G. Richard III, Ph.D. (@nolaforensix)
@@ -729,10 +730,15 @@ while (scanf("%d %d %d %d %d", &processes[num_of_processes].time, &processes[num
 // intialization of queues
 PriorityQueue q1, q2, q3, q4;
 int clock = 0;
+int length = sizeof(processes) / sizeof(processes[0]);
 
 // function for enqueueing process
-void enqueueProcess(){
-
+void enqueueProcess(Process processToEnqueue){
+  //printf("PID: %d, ARRIVAL TIME: %d", processes[i].pid, processes[i].time);
+  //printf("CREATE: Process %d entered the ready queue at time %d", processToEnqueue.pid, processToEnqueue.time);
+  if(processToEnqueue.time == clock){
+    add_to_queue(q1, processToEnqueue, /*priority*/);
+  }
 }
 
 // function to handle scheduling
@@ -746,10 +752,25 @@ void handleStateChange(){
 }
 
 // main loop for queues
-while(/* there's another (RUN, I/O, REPEAT) phase for process PID */){
+while( /* there's another (RUN, I/O, REPEAT) phase for process PID */){
+
+  for (int i = 0; i < length; i++){
+    if(processes[i].time == clock) {
+      /*add to queue*/
+    }
+
+
+  }
+
+  
+  
+
+  //for (int i )
+
   // check if process should enter
   // enqueue processes in q1
   // ...
+  enqueueProcess();
 
   // execute highest-priority process
   // ...
