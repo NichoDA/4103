@@ -49,9 +49,10 @@ int main(int argc, char *argv[]) {
             element = 0;
             rewind_queue(&q1);
             // make exit, I/O, demotion or promotion decisions
-            while(/*there's another (RUN, I/O, REPEAT) phase for process PID*/){
-                int i = 0
-                for(i = 0; i < processes[i].repeat; i++){
+            int repeatPhase = 0;
+            while(repeatPhase != process[i].repeat + 1){
+                int j = 0
+                for(j = 0; j < processes[i].repeat; j++){
                     // do RUN for processes[i].time units
                     printf("RUN: Process %d started execution from level %d at time %d; wants to execute for %d ticks.", 
                             processes[i].pid, 1, clock, processes[i].run);
@@ -60,13 +61,14 @@ int main(int argc, char *argv[]) {
                     printf("I/O: Process %d blocked for I/O at time %d.", processes[i].pid, clock);
                     clock += processes[i].io;
                 }
-                if(i == processes[i].repeat){
+                if(j == processes[i].repeat){
                     // do RUN for processes[i].time units
                     printf("RUN: Process %d started execution from level %d at time %d; wants to execute for %d ticks.", 
                             processes[i].pid, 1, clock, processes[i].run);
                     clock += processes[i].run;
                     // do FINISH after RUN time
                     printf("FINISHED: Process %d finished at time %d.", processes[i].pid, clock);
+                    remove_from_front(&q1, &process[i]);
                     clock -= 1;
                 }
             }
