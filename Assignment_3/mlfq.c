@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
     int lvl1 = 10, lvl2 = 30, lvl3 = 100, lvl4 = 200;
     int clock = 0;
     int element, finished = 0;
-    int totalProcesses = 6;
+    int totalProcesses = 0;
     
 
     // ask user for queue entries
@@ -45,6 +45,8 @@ int main(int argc, char *argv[]) {
                 &processes[num_of_processes].run, &processes[num_of_processes].io, &processes[num_of_processes].repeat);
         num_of_processes++;
     }
+
+    clock = processes[0].time;
 
 
     for (int i = 0; i < num_of_processes; i++){
@@ -59,12 +61,17 @@ int main(int argc, char *argv[]) {
         }
     }
 
+    int cpuUsage[100];
+    int arrayInc = 0;
+    int timeUnits = 0;
+    int nullTime = 0;
+
 
     // initializing queue
     init_queue(&q1, sizeof(processes), TRUE, process_compare, FALSE);
 
     // run while there is at least one undetermined process
-    while(finished != totalProcesses){ 
+    while(finished != processes[num_of_processes - 1].pid){ 
 
         for (int i = 0; i < num_of_processes; i++){
             // check if process should enter queue at current clock value
@@ -73,12 +80,12 @@ int main(int argc, char *argv[]) {
                 printf("PID: %d, ARRIVAL TIME: %d\n", processes[i].pid, processes[i].time);
                 //add_to_queue(&q1, &processes[i].pid, current_priority(&q1)); /*unsure if this is how to get priority*/
                 printf("CREATE: Process %d entered the ready queue at time %d\n", processes[i].pid, processes[i].time);
+                timeUnits = (processes[i].repeat + 1) * processes[i].run;
             }
-            
             // execute highest-priority process
             element = 0;
             rewind_queue(&q1);
-            if (processes[i].time <= clock) { ////////
+            if (processes[i].time >= clock) { ////////
                 // make exit, I/O, demotion or promotion decisions
                 while(processes[i].repeat >= 0){ /* peek_at_current(&q1, 4) */
                     if (processes[i].repeat > 0) {
@@ -86,8 +93,10 @@ int main(int argc, char *argv[]) {
                         
                         printf("RUN: Process %d started execution from level %d at time %d; wants to execute for %d ticks.\n", 
                                 processes[i].pid, 1, clock, processes[i].run);
+                        clock += processes[i].run;
                         // do I/O for processes[i].io time units
                         printf("I/O: Process %d blocked for I/O at time %d.\n", processes[i].pid, clock);
+                        nullTime += processes[i].io;
                         clock += processes[i].io;
                         processes[i].repeat--;
                     }
@@ -99,19 +108,26 @@ int main(int argc, char *argv[]) {
                         // do FINISH after RUN time
                         printf("FINISHED: Process %d finished at time %d.\n", processes[i].pid, clock);
                         remove_from_front(&q1, &processes[i]);
-                        finished++;
-                        int timeUnits = (processes[i].repeat + 1) * processes[i].run;
+                        finished = processes[i].pid;
+                        
+                        cpuUsage[arrayInc] = processes[i].pid;
+                        cpuUsage[arrayInc + 1] = timeUnits;
+                        arrayInc += 2;
                         processes[i].repeat--;
                     }
                 }
             }
-         }   
-
-        clock++;
+        }   
+        clock++;  
     }
     printf("Scheduler shutdown at time %d.\n", clock);
     printf("Total CPU usage for all processes scheduled: \n");
     /*print each pid with the the final clock time and total CPU usage of 
-    all processes (including the <<null>> process) scheduled when it exits.*/   
+    all processes (including the <<null>> process) scheduled when it exits.*/
+    printf("Process <<null>>:\t%d time units.\n", nullTime);
+    for(int i = 0; i < arrayInc; i++){
+        printf("Process %d:\t\t%d time units.\n", cpuUsage[i], cpuUsage[i + 1]);
+        i++;
+    }   
 }
 
