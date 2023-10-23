@@ -20,6 +20,7 @@ int main(int argc, char *argv[]) {
     Queue q1, q2, q3, q4;
     int clock = 0;
     int element, finished = 0;
+    
 
     // ask user for queue entries
     printf("Queue entries one per line:\n");
@@ -29,6 +30,7 @@ int main(int argc, char *argv[]) {
                 &processes[num_of_processes].run, &processes[num_of_processes].io, &processes[num_of_processes].repeat);
         num_of_processes++;
     }
+
 
     // initializing queue
     init_queue(&q1, sizeof(processes), TRUE, process_compare, FALSE);
@@ -69,6 +71,8 @@ int main(int argc, char *argv[]) {
                     // do FINISH after RUN time
                     printf("FINISHED: Process %d finished at time %d.", processes[i].pid, clock);
                     remove_from_front(&q1, &process[i]);
+                    finished++;
+                    int timeUnits = (processes[i].repeat + 1) * processes[i].run;
                     clock -= 1;
                 }
             }
