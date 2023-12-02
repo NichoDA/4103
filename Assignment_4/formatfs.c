@@ -1,15 +1,15 @@
 // Nicholas Domingue and Bryce Olivier
 #include <stdio.h>
 #include <stdlib.h>
-#include "filesystem.h"
+#include "softwaredisk.h"
 
+// this code needs to run before running 'testfs0.c'
 
 // initialize filesystem
-void init_filesystem() {
+int main(int argc, char *argv[]) {
+    printf("Intitializing Software Disk...\n");
     init_software_disk();
-}
-
-
-create_file(char *name){
-
+    printf("Software disk size: " + software_disk_size() + "\n");
+    printf("\n");
+    sd_print_error();
 }
