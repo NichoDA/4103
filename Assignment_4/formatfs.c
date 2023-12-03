@@ -9,7 +9,5 @@
 int main(int argc, char *argv[]) {
     printf("Intitializing Software Disk...\n");
     init_software_disk();
-    printf("Software disk size: " + software_disk_size() + "\n");
-    printf("\n");
     sd_print_error();
 }

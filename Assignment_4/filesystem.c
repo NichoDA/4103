@@ -26,6 +26,11 @@
 // fs error code set
 FSError fserror;
 
+typedef struct Bitmap {
+    unsigned char *bits;
+    unsigned long size_in_bits;
+} Bitmap;
+
 
 // open existing file with pathname 'name' and access mode 'mode'.
 // Current file position is set to byte 0.  Returns NULL on
@@ -165,5 +170,6 @@ void fs_print_error(void) {
 // success, 0 on failure.  This should be used in disk initialization
 // to ensure that everything will work correctly.
 int check_structure_alignment(void) {
-    printf("here");
+    //init_bitmap();
+    return 1;
 }
