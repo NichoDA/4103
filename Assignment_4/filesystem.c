@@ -170,6 +170,7 @@ void fs_print_error(void) {
 // success, 0 on failure.  This should be used in disk initialization
 // to ensure that everything will work correctly.
 int check_structure_alignment(void) {
-    //init_bitmap();
+    init_bitmap(&data_bitmap, NUM_BLOCKS);
+    init_bitmap(&inode_bitmap, NUM_BLOCKS / INODES_PER_BLOCK);
     return 1;
 }
