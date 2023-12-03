@@ -31,19 +31,36 @@ FSError fserror;
 // Current file position is set to byte 0.  Returns NULL on
 // error. Always sets 'fserror' global.
 File open_file(char *name, FileMode mode) {
-    printf("here");
+    if(file_exists() == 1) {
+        int current_file_position = 0;
+        fserror=FS_NONE;
+    } else {
+        fserror=FS_FILE_NOT_FOUND;
+        return NULL;
+    }
 }
 
 // create and open new file with pathname 'name' and (implied) access
 // mode READ_WRITE.  Current file position is set to byte 0.  Returns
 // NULL on error. Always sets 'fserror' global.
 File create_file(char *name) {
-    printf("here");
+    if(file_exists() == 0){
+        int current_file_position = 0;
+        fserror=FS_NONE;
+    } else {
+        fserror=FS_FILE_ALREADY_EXISTS;
+        return NULL;
+    }
 }
 
 // close 'file'.  Always sets 'fserror' global.
 void close_file(File file) {
-    printf("here");
+    if(file is open) {
+        fserror=FS_NONE;
+        //close the file
+    } else {
+        fserror=FS_FILE_NOT_OPEN;
+    }
 }
 
 // read at most 'numbytes' of data from 'file' into 'buf', starting at the 
@@ -51,7 +68,7 @@ void close_file(File file) {
 // then a return value less than 'numbytes' signals this condition. Always sets
 // 'fserror' global.
 unsigned long read_file(File file, void *buf, unsigned long numbytes) {
-    printf("here");
+    return read_sd_block(*buf, numbytes);
 }
 
 // write 'numbytes' of data from 'buf' into 'file' at the current file
@@ -59,7 +76,11 @@ unsigned long read_file(File file, void *buf, unsigned long numbytes) {
 // error, the return value may be less than 'numbytes'.  Always sets
 // 'fserror' global.
 unsigned long write_file(File file, void *buf, unsigned long numbytes) {
-    printf("here");
+    if() {
+        
+        return 0;
+    }
+    return write_sd_block(*buf, numbytes);
 }
 
 // sets current position in file to 'bytepos', always relative to the
@@ -79,19 +100,64 @@ unsigned long file_length(File file) {
 // deletes the file named 'name', if it exists. Returns 1 on success,
 // 0 on failure.  Always sets 'fserror' global.
 int delete_file(char *name) {
-    printf("here");
+    if(file_exists(*name) == 1) {
+        // delete file *name
+        fserror=FS_NONE;
+        return 1;
+    } else {
+        fserror=FS_FILE_NOT_FOUND;
+        return 0;
+    }
 }
 
 // determines if a file with 'name' exists and returns 1 if it exists, otherwise 0.
 // Always sets 'fserror' global.
 int file_exists(char *name) {
-    printf("here");
+    fserror=FS_NONE;
+    if(*file_name == *name) {
+        return 1;
+    } else {
+        return 0;
+    }
 }
 
 // describe current filesystem error code by printing a descriptive
 // message to standard error.
 void fs_print_error(void) {
-    printf("here");
+    switch (fserror) {
+        case FS_NONE:
+            printf("FS: No error.\n");
+            break;
+        case FS_OUT_OF_SPACE:
+            printf("FS: Software disk is full.\n");
+            break;
+        case FS_FILE_NOT_OPEN:
+            printf("FS: File not open.\n");
+            break;
+        case FS_FILE_OPEN:
+            printf("FS: File already open.\n");
+            break;
+        case FS_FILE_NOT_FOUND:
+            printf("FS: File does not exist.\n");
+            break;
+        case FS_FILE_READ_ONLY:
+            printf("FS: File is read only.\n");
+            break;
+        case FS_FILE_ALREADY_EXISTS:
+            printf("FS: File already exists.\n");
+            break;
+        case FS_EXCEEDS_MAX_FILE_SIZE:
+            printf("FS: File exceeds max file size.\n");
+            break;
+        case FS_ILLEGAL_FILENAME:
+            printf("FS: Illegal file name.\n");
+            break;
+        case FS_IO_ERROR:
+            printf("FS: Something really bad happened.\n");
+            break;
+        default:
+            printf("FS: Unknown error code %d.\n", fserror);
+    }
 }
 
 // extra function to make sure structure alignment, data structure
